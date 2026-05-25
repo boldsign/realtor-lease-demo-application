@@ -1,0 +1,12 @@
+{
+  "resource": "https://cubeflakes-realtorleasedemo.boldsign.com/",
+  "authorization_servers": [
+    "https://account.boldsign.com"
+  ],
+  "scopes_supported": [
+    "openid",
+    "profile",
+    "email",
+    "offline_access"
+  ]
+}

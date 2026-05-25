@@ -1,0 +1,206 @@
+@model BookingModel
+
+@{
+    ViewData["Title"] = "Thank You";
+    Layout = "_Layout"; 
+}
+
+<div class="lease-thankyou-page container-fluid">
+
+    <div class="d-flex flex-wrap align-items-center gap-2 mb-4">
+        <a href="/" class="btn back-property-btn ms-auto">
+            <i class="bi bi-arrow-left me-2"></i>
+            Back to Properties
+        </a>
+    </div>
+
+    <!-- Layout -->
+    <div class="row g-4">
+
+        <!-- LEFT -->
+        <div class="col-xl-7">
+
+            <div class="thankyou-card h-100">
+
+                <!-- Header -->
+                <div class="d-flex align-items-start gap-3">
+                    <div class="success-icon flex-shrink-0">
+                        <img src="@Url.Content("~/images/thankyou.png")"
+                             alt="Success"
+                             class="img-fluid" />
+                    </div>
+
+                    <div>
+                        <h1 class="thankyou-title mb-1">
+                            Thank You for Registering With Us!
+                        </h1>
+
+                        <p class="thankyou-subtitle mb-0">
+                            Your lease agreement request has been successfully submitted. <strong>This is a demo confirmation message.</strong>
+                        </p>
+                    </div>
+                </div>
+
+                <hr class="section-divider first" />
+
+                <!-- Description -->
+                <p class="thankyou-description">
+                    You can move into the property from the available date mentioned below.
+                </p>
+
+                <!-- Move-in -->
+                <div class="movein-card">
+                    <div class="d-flex align-items-center gap-4">
+
+                        <div class="movein-icon">
+                            <i class="bi bi-calendar-check"></i>
+                        </div>
+
+                        <div>
+                            <div class="movein-label">
+                                Available Move-In Date
+                            </div>
+
+                            <div class="movein-date">
+                               @(Model.MoveInDate?.ToString("MMMM dd, yyyy") ?? "To be confirmed")
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <hr class="section-divider second" />                
+
+                <!-- Buttons -->
+                <div class="row g-3 mt-4">
+
+                    <div>
+                        <a id="downloadDocBtn"
+                           href="#"
+                           class="btn agreement-btn-primary w-100 disabled"
+                           aria-disabled="true">
+                            <span id="downloadDocSpinner"
+                                  class="spinner-border spinner-border-sm me-2"
+                                  role="status" aria-hidden="true"></span>
+                            <span id="downloadDocText">Please wait</span>
+                        </a>
+                    </div>                    
+
+                </div>
+
+                <!-- Secure -->
+                <div class="secure-box">
+                    <i class="bi bi-shield-check me-2"></i>
+                    This document is securely generated for <strong>demo purposes only</strong>.
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT (buttons unlocked by signcompleted.js once webhook fires) -->
+        <div class="col-xl-5">
+
+            <div class="property-card">
+
+                <!-- Dynamic Image with BHK badge overlay -->
+                <div class="property-img-wrap">
+                    <img src="@Model.ImageUrl"
+                         class="img-fluid property-image"
+                         alt="@Model.PropertyName" />
+                    <span class="property-img-badge">
+                        @Model.Bedrooms BHK
+                    </span>
+                </div>
+
+                <div class="property-content">
+
+                    <div class="d-flex justify-content-between gap-3 mt-3">
+
+                        <div>
+                            <h3 class="property-title">
+                                @Model.PropertyName
+                            </h3>
+
+                            <div class="property-address">
+                                <i class="bi bi-geo-alt me-1"></i>
+                                @Model.Address
+                            </div>
+                        </div>
+
+                        <div class="property-price">
+                            @Model.MonthlyRent.ToString("C0")
+                            <span>/ month</span>
+                        </div>
+
+                    </div>
+
+                    <!-- Property Details -->
+                    <div class="property-details">
+
+                        <div class="property-row">
+                            <span class="d-flex align-items-center gap-2">
+                                <i class="bi bi-door-closed property-row-icon"></i>
+                                Bedrooms
+                            </span>
+                            <strong>@Model.Bedrooms Bedrooms</strong>
+                        </div>
+
+                        <div class="property-row">
+                            <span class="d-flex align-items-center gap-2">
+                                <i class="bi bi-droplet property-row-icon"></i>
+                                Bathrooms
+                            </span>
+                            <strong>@Model.Bathrooms Bathrooms</strong>
+                        </div>
+
+                        <div class="property-row">
+                            <span class="d-flex align-items-center gap-2">
+                                <i class="bi bi-car-front property-row-icon"></i>
+                                Parking
+                            </span>
+                            <strong>@Model.Parking Parking Space@(Model.Parking > 1 ? "s" : "")</strong>
+                        </div>
+
+                        <div class="property-row">
+                            <span class="d-flex align-items-center gap-2">
+                                <i class="bi bi-calendar3 property-row-icon"></i>
+                                Lease Duration
+                            </span>
+                            <strong>@Model.LeaseTerm Months</strong>
+                        </div>
+
+                        <div class="property-row">
+                            <span class="d-flex align-items-center gap-2">
+                                <i class="bi bi-shield-check property-row-icon"></i>
+                                Security Deposit
+                            </span>
+                            <strong>@Model.MonthlyRent.ToString("C0")</strong>
+                        </div>
+
+                        <div class="property-row">
+                            <span class="d-flex align-items-center gap-2">
+                                <i class="bi bi-heart property-row-icon"></i>
+                                Pet Policy
+                            </span>
+                            <strong>@Model.PetPolicy</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <div id="thankyou-meta"
+         data-document-id="@Model.DocumentId"
+         class="thankyou-meta-hidden"></div>
+    <script src="~/js/signcompleted.js" asp-append-version="true"></script>
+}

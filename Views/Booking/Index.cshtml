@@ -1,0 +1,503 @@
+@model BookingModel
+@{
+    ViewData["Title"] = "Lease Application";
+    ViewBag.Breadcrumb = new[] {
+        new { Text = "Home", Url = "/", Active = false },
+        new { Text = Model.PropertyName ?? "Property Details", Url = "/Property/Details", Active = false },
+        new { Text = "Lease Application", Url = "#", Active = true }
+    };
+
+    ViewBag.BackUrl = "/";
+    ViewBag.BackText = "Back to Properties";
+}
+
+
+<div class="lf-wrapper lf-wrapper-wide container mx-auto">
+
+    <div class="lf-header">
+        <div>
+            <span class="lf-eyebrow">
+                <i class="bi bi-house-check"></i>
+                Lease Application
+            </span>
+            <h1 class="lf-title">Ready to move in?</h1>
+            <p class="lf-subtitle">
+                We’ve prefilled the tenant details for this demo. You can continue with the sample information or update the fields before proceeding. The next step will generate the lease agreement for the selected @Model.PropertyName.
+            </p>
+        </div>
+    </div>
+
+    <div class="row gx-4 align-items-stretch lf-two-col-row">
+        <div class="col-12 col-xl-6 d-flex">
+            <div class="lf-card d-flex flex-column w-100">
+                <form asp-controller="Booking" asp-action="Index" method="post" novalidate>
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" asp-for="PropertyName" />            
+                    <input type="hidden" asp-for="ImageUrl" />
+                    <input type="hidden" asp-for="Address" />
+                    <input type="hidden" asp-for="MonthlyRent" />
+                    <input type="hidden" asp-for="Bedrooms" />
+                    <input type="hidden" asp-for="Bathrooms" />
+                    <input type="hidden" asp-for="Parking" />
+                    <input type="hidden" asp-for="LeaseTerm" />
+                    <input type="hidden" asp-for="PetPolicy" />
+                    <input type="hidden" asp-for="AvailableFrom" />
+
+
+                    <div class="lf-fields">
+
+                        <div class="lf-field">
+                            <label asp-for="FullName" class="lf-label">
+                                <i class="bi bi-person"></i>
+                                @Html.DisplayNameFor(m => m.FullName)
+                            </label>
+                            <div class="lf-input-wrap">
+                                <input asp-for="FullName"
+                                       class="lf-input"
+                                       placeholder="Jane Smith"
+                                       autocomplete="name" />
+                            </div>
+                            <span asp-validation-for="FullName" class="lf-error"></span>
+                        </div>
+
+                        <div class="lf-field">
+                            <label asp-for="Email" class="lf-label">
+                                <i class="bi bi-envelope"></i>
+                                @Html.DisplayNameFor(m => m.Email)
+                            </label>
+                            <div class="lf-input-wrap">
+                                <input asp-for="Email"
+                                       class="lf-input"
+                                       placeholder="jane@example.com"
+                                       autocomplete="email" />
+                            </div>
+                            <span asp-validation-for="Email" class="lf-error"></span>
+                        </div>
+
+                        <div class="lf-field">
+                            <label asp-for="Phone" class="lf-label">
+                                <i class="bi bi-telephone"></i>
+                                @Html.DisplayNameFor(m => m.Phone)
+                            </label>
+                            <div class="lf-input-wrap">
+                                <input asp-for="Phone"
+                                       class="lf-input"
+                                       placeholder="+1 (415) 555-0134"
+                                       autocomplete="tel" />
+                            </div>
+                            <span asp-validation-for="Phone" class="lf-error"></span>
+                        </div>
+
+                        <div class="lf-field">
+                            <label asp-for="MoveInDate" class="lf-label">
+                                <i class="bi bi-calendar3"></i>
+                                @Html.DisplayNameFor(m => m.MoveInDate)
+                            </label>
+                            <div class="lf-input-wrap">
+                                <input asp-for="MoveInDate"
+                                       class="lf-input"
+                                       type="date"
+                                       min="@(Model.AvailableFrom != default ? Model.AvailableFrom.ToString("yyyy-MM-dd") : DateTime.Today.ToString("yyyy-MM-dd"))" />
+                            </div>
+                            <span asp-validation-for="MoveInDate" class="lf-error"></span>
+                        </div>
+
+                    </div>
+
+                    <div class="lf-actions">
+                        <button type="submit" class="btn btn-brand lf-btn-submit">
+                            <i class="bi bi-file-earmark-text me-2"></i>Continue to Lease
+                        </button>
+                        <a asp-controller="Home" asp-action="Index" class="lf-btn-back">
+                            <i class="bi bi-arrow-left me-1"></i>Back to Property
+                        </a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+        <div class="col-12 col-xl-6 d-flex lf-code-col">
+            <div class="lf-code-panel w-100 d-flex flex-column">
+
+                <div class="lf-code-panel__header">
+                    <div class="lf-code-panel__icon-wrap">
+                        <i class="bi bi-code-slash"></i>
+                    </div>
+                    <div>
+                        <div class="lf-code-panel__title">Code Example</div>
+                        <div class="lf-code-panel__subtitle">API request to create a lease agreement</div>
+                    </div>
+                </div>
+
+                <div class="lf-code-panel__tabs" id="lf-tabs">
+                    <button class="lf-code-tab lf-code-tab--active" data-lang="dotnet" type="button">.NET</button>
+                    <button class="lf-code-tab" data-lang="curl" type="button">cURL</button>
+                    <button class="lf-code-tab" data-lang="python" type="button">Python</button>
+                    <button class="lf-code-tab" data-lang="php" type="button">PHP</button>
+                    <button class="lf-code-tab" data-lang="java" type="button">Java</button>
+                    <button class="lf-code-tab" data-lang="node" type="button">Node</button>
+                </div>
+
+                <div class="lf-code-panel__body flex-grow-1 d-flex flex-column">
+                    <div class="lf-code-block flex-grow-1 position-relative">
+                        <button class="lf-code-copy-btn" id="lf-copy-btn" type="button" title="Copy code">
+                            <i class="bi bi-clipboard me-1"></i>Copy
+                        </button>
+
+                        @* .NET *@
+                        <pre class="lf-code-pre lf-code-snippet lf-code-snippet--active" id="lf-snippet-dotnet"><code><span class="lf-ln"> 1</span>  <span class="lf-kw">using</span> BoldSign.Api;
+<span class="lf-ln"> 2</span>  <span class="lf-kw">using</span> BoldSign.Model;
+<span class="lf-ln"> 3</span>  
+<span class="lf-ln"> 4</span>  <span class="lf-c">// Replace these two values with your BoldSign sandbox values.</span>
+<span class="lf-ln"> 5</span>  <span class="lf-kw">const</span> <span class="lf-kw">string</span> apiKey = <span class="lf-str">"&lt;YOUR_API_KEY&gt;"</span>;
+<span class="lf-ln"> 6</span>  <span class="lf-kw">const</span> <span class="lf-kw">string</span> templateId = <span class="lf-str">"&lt;YOUR_TEMPLATE_ID&gt;"</span>;
+<span class="lf-ln"> 7</span>  
+<span class="lf-ln"> 8</span>  <span class="lf-kw">var</span> apiClient = <span class="lf-kw">new</span> <span class="lf-cls">ApiClient</span>(<span class="lf-str">"https://api.boldsign.com"</span>, apiKey);
+<span class="lf-ln"> 9</span>  <span class="lf-kw">var</span> templateClient = <span class="lf-kw">new</span> <span class="lf-cls">TemplateClient</span>(apiClient);
+<span class="lf-ln">10</span>  <span class="lf-kw">var</span> documentClient = <span class="lf-kw">new</span> <span class="lf-cls">DocumentClient</span>(apiClient);
+<span class="lf-ln">11</span>  
+<span class="lf-ln">12</span>  <span class="lf-c">// Sample lease details.</span>
+<span class="lf-ln">13</span>  <span class="lf-kw">var</span> tenantName = <span class="lf-str">"Jane Smith"</span>;
+<span class="lf-ln">14</span>  <span class="lf-kw">var</span> tenantEmail = <span class="lf-str">"jane@example.com"</span>;
+<span class="lf-ln">15</span>  
+<span class="lf-ln">16</span>  <span class="lf-kw">var</span> documentDetails = <span class="lf-kw">new</span> <span class="lf-cls">SendForSignFromTemplate</span>
+<span class="lf-ln">17</span>  {
+<span class="lf-ln">18</span>      <span class="lf-prop">TemplateId</span> = templateId,
+<span class="lf-ln">19</span>      <span class="lf-prop">Title</span> = <span class="lf-str">"Realtor Lease Agreement"</span>,
+<span class="lf-ln">20</span>  
+<span class="lf-ln">21</span>      <span class="lf-c">// Disable emails because the signer signs inside your app.</span>
+<span class="lf-ln">22</span>      <span class="lf-prop">DisableEmails</span> = <span class="lf-kw">true</span>,
+<span class="lf-ln">23</span>  
+<span class="lf-ln">24</span>      <span class="lf-prop">Roles</span> = <span class="lf-kw">new</span> <span class="lf-cls">List</span>&lt;<span class="lf-cls">Roles</span>&gt;
+<span class="lf-ln">25</span>      {
+<span class="lf-ln">26</span>          <span class="lf-kw">new</span> <span class="lf-cls">Roles</span>
+<span class="lf-ln">27</span>          {
+<span class="lf-ln">28</span>              <span class="lf-prop">RoleIndex</span> = <span class="lf-num">1</span>,
+<span class="lf-ln">29</span>              <span class="lf-prop">SignerName</span> = tenantName,
+<span class="lf-ln">30</span>              <span class="lf-prop">SignerEmail</span> = tenantEmail,
+<span class="lf-ln">31</span>              <span class="lf-prop">SignerType</span> = <span class="lf-cls">SignerType</span>.<span class="lf-prop">Signer</span>,
+<span class="lf-ln">32</span>  
+<span class="lf-ln">33</span>              <span class="lf-c">// These IDs must match the field IDs in your BoldSign template.</span>
+<span class="lf-ln">34</span>              <span class="lf-prop">ExistingFormFields</span> = <span class="lf-kw">new</span> <span class="lf-cls">List</span>&lt;<span class="lf-cls">ExistingFormField</span>&gt;
+<span class="lf-ln">35</span>              {
+<span class="lf-ln">36</span>                  <span class="lf-kw">new</span> <span class="lf-cls">ExistingFormField</span> { <span class="lf-prop">Id</span> = <span class="lf-str">"txtTenant"</span>, <span class="lf-prop">Value</span> = tenantName },
+<span class="lf-ln">37</span>                  <span class="lf-kw">new</span> <span class="lf-cls">ExistingFormField</span> { <span class="lf-prop">Id</span> = <span class="lf-str">"txtHouseAddress"</span>, <span class="lf-prop">Value</span> = <span class="lf-str">"123 Main St"</span> },
+<span class="lf-ln">38</span>                  <span class="lf-kw">new</span> <span class="lf-cls">ExistingFormField</span> { <span class="lf-prop">Id</span> = <span class="lf-str">"txtMonthlyRent"</span>, <span class="lf-prop">Value</span> = <span class="lf-str">"$2,500.00"</span> },
+<span class="lf-ln">39</span>                  <span class="lf-kw">new</span> <span class="lf-cls">ExistingFormField</span> { <span class="lf-prop">Id</span> = <span class="lf-str">"txtLeaseTerm"</span>, <span class="lf-prop">Value</span> = <span class="lf-str">"12 months"</span> }
+<span class="lf-ln">40</span>              }
+<span class="lf-ln">41</span>          }
+<span class="lf-ln">42</span>      }
+<span class="lf-ln">43</span>  };
+<span class="lf-ln">44</span>  
+<span class="lf-ln">45</span>  <span class="lf-c">// Create the lease agreement from the template.</span>
+<span class="lf-ln">46</span>  <span class="lf-cls">DocumentCreated</span> document = <span class="lf-kw">await</span> templateClient
+<span class="lf-ln">47</span>      .<span class="lf-prop">SendUsingTemplateAsync</span>(documentDetails);
+<span class="lf-ln">48</span>  
+<span class="lf-ln">49</span>  <span class="lf-c">// Generate an embedded signing link for in-app signing.</span>
+<span class="lf-ln">50</span>  <span class="lf-cls">EmbeddedSigningLink</span> embeddedSigningLink =
+<span class="lf-ln">51</span>      <span class="lf-kw">await</span> documentClient.<span class="lf-prop">GetEmbeddedSignLinkAsync</span>(
+<span class="lf-ln">52</span>          document.<span class="lf-prop">DocumentId</span>,
+<span class="lf-ln">53</span>          tenantEmail).<span class="lf-prop">ConfigureAwait</span>(<span class="lf-kw">false</span>);
+<span class="lf-ln">54</span>  
+<span class="lf-ln">55</span>  <span class="lf-kw">var</span> signLink = embeddedSigningLink.<span class="lf-prop">SignLink</span>;
+<span class="lf-ln">56</span>  
+<span class="lf-ln">57</span>  <span class="lf-c">// Load signLink in an iframe in your app.</span>
+<span class="lf-ln">58</span>  <span class="lf-c">// &lt;iframe src="@@signLink" width="100%" height="100%"&gt;&lt;/iframe&gt;</span>
+</code></pre>
+
+                        @* cURL *@
+                        <pre class="lf-code-pre lf-code-snippet" id="lf-snippet-curl"><code><span class="lf-ln"> 1</span>  curl -X POST <span class="lf-str">"https://api.boldsign.com/v1/template/send?templateId={YOUR_TEMPLATE_ID}"</span> \
+<span class="lf-ln"> 2</span>   -H <span class="lf-str">"accept: application/json"</span> \
+<span class="lf-ln"> 3</span>   -H <span class="lf-str">"X-API-KEY: {YOUR_API_KEY}"</span> \
+<span class="lf-ln"> 4</span>   -H <span class="lf-str">"Content-Type: application/json"</span> \
+<span class="lf-ln"> 5</span>   -d <span class="lf-str">'{
+<span class="lf-ln"> 6</span>     "title": "Realtor Lease Agreement",
+<span class="lf-ln"> 7</span>     "disableEmails": true,
+<span class="lf-ln"> 8</span>     "roles": [
+<span class="lf-ln"> 9</span>       {
+<span class="lf-ln">10</span>         "roleIndex": 1,
+<span class="lf-ln">11</span>         "signerName": "Jane Smith",
+<span class="lf-ln">12</span>         "signerEmail": "jane@example.com",
+<span class="lf-ln">13</span>         "signerType": "Signer",
+<span class="lf-ln">14</span>         "existingFormFields": [
+<span class="lf-ln">15</span>           {"id": "txtTenant",      "value": "Jane Smith"},
+<span class="lf-ln">16</span>           {"id": "txtHouseAddress","value": "123 Main St"},
+<span class="lf-ln">17</span>           {"id": "txtMonthlyRent", "value": "$2,500.00"},
+<span class="lf-ln">18</span>           {"id": "txtLeaseTerm",   "value": "12 months"}
+<span class="lf-ln">19</span>         ]
+<span class="lf-ln">20</span>       }
+<span class="lf-ln">21</span>     ]
+<span class="lf-ln">22</span>   }'</span>
+</code></pre>
+
+                        @* Python *@
+                        <pre class="lf-code-pre lf-code-snippet" id="lf-snippet-python"><code><span class="lf-ln"> 1</span>  <span class="lf-kw">import</span> boldsign
+<span class="lf-ln"> 2</span>  
+<span class="lf-ln"> 3</span>  <span class="lf-c"># Replace these two values with your BoldSign sandbox values.</span>
+<span class="lf-ln"> 4</span>  api_key     = <span class="lf-str">"&lt;YOUR_API_KEY&gt;"</span>
+<span class="lf-ln"> 5</span>  template_id = <span class="lf-str">"&lt;YOUR_TEMPLATE_ID&gt;"</span>
+<span class="lf-ln"> 6</span>  
+<span class="lf-ln"> 7</span>  configuration = boldsign.<span class="lf-cls">Configuration</span>(api_key=api_key)
+<span class="lf-ln"> 8</span>  
+<span class="lf-ln"> 9</span>  <span class="lf-kw">with</span> boldsign.<span class="lf-cls">ApiClient</span>(configuration) <span class="lf-kw">as</span> api_client:
+<span class="lf-ln">10</span>      template_api = boldsign.<span class="lf-cls">TemplateApi</span>(api_client)
+<span class="lf-ln">11</span>      document_api = boldsign.<span class="lf-cls">DocumentApi</span>(api_client)
+<span class="lf-ln">12</span>  
+<span class="lf-ln">13</span>      <span class="lf-c"># Sample lease details.</span>
+<span class="lf-ln">14</span>      tenant_name  = <span class="lf-str">"Jane Smith"</span>
+<span class="lf-ln">15</span>      tenant_email = <span class="lf-str">"jane@example.com"</span>
+<span class="lf-ln">16</span>  
+<span class="lf-ln">17</span>      send_request = boldsign.<span class="lf-cls">SendForSignFromTemplate</span>(
+<span class="lf-ln">18</span>          template_id  = template_id,
+<span class="lf-ln">19</span>          title        = <span class="lf-str">"Realtor Lease Agreement"</span>,
+<span class="lf-ln">20</span>          disable_emails = <span class="lf-kw">True</span>,
+<span class="lf-ln">21</span>          roles = [boldsign.<span class="lf-cls">Roles</span>(
+<span class="lf-ln">22</span>              role_index   = <span class="lf-num">1</span>,
+<span class="lf-ln">23</span>              signer_name  = tenant_name,
+<span class="lf-ln">24</span>              signer_email = tenant_email,
+<span class="lf-ln">25</span>              signer_type  = <span class="lf-str">"Signer"</span>,
+<span class="lf-ln">26</span>              <span class="lf-c"># These IDs must match field IDs in your BoldSign template.</span>
+<span class="lf-ln">27</span>              existing_form_fields = [
+<span class="lf-ln">28</span>                  boldsign.<span class="lf-cls">ExistingFormField</span>(id=<span class="lf-str">"txtTenant"</span>, value=tenant_name),
+<span class="lf-ln">29</span>                  boldsign.<span class="lf-cls">ExistingFormField</span>(id=<span class="lf-str">"txtHouseAddress"</span>, value=<span class="lf-str">"123 Main St"</span>),
+<span class="lf-ln">30</span>                  boldsign.<span class="lf-cls">ExistingFormField</span>(id=<span class="lf-str">"txtMonthlyRent"</span>, value=<span class="lf-str">"$2,500.00"</span>),
+<span class="lf-ln">31</span>                  boldsign.<span class="lf-cls">ExistingFormField</span>(id=<span class="lf-str">"txtLeaseTerm"</span>, value=<span class="lf-str">"12 months"</span>),
+<span class="lf-ln">32</span>              ]
+<span class="lf-ln">33</span>          )]
+<span class="lf-ln">34</span>      )
+<span class="lf-ln">35</span>  
+<span class="lf-ln">36</span>      <span class="lf-c"># Create the lease agreement from the template.</span>
+<span class="lf-ln">37</span>      document = template_api.<span class="lf-prop">send_using_template</span>(send_request)
+<span class="lf-ln">38</span>  
+<span class="lf-ln">39</span>      <span class="lf-c"># Generate an embedded signing link for in-app signing.</span>
+<span class="lf-ln">40</span>      link = document_api.<span class="lf-prop">get_embedded_sign_link</span>(
+<span class="lf-ln">41</span>          document_id  = document.document_id,
+<span class="lf-ln">42</span>          signer_email = tenant_email,
+<span class="lf-ln">43</span>      )
+<span class="lf-ln">44</span>      sign_link = link.sign_link
+<span class="lf-ln">45</span>  
+<span class="lf-ln">46</span>      <span class="lf-c"># Load sign_link in an iframe in your app.</span>
+<span class="lf-ln">47</span>      <span class="lf-c"># &lt;iframe src="{{ sign_link }}" width="100%" height="100%"&gt;&lt;/iframe&gt;</span>
+</code></pre>
+
+                        @* PHP *@
+                        <pre class="lf-code-pre lf-code-snippet" id="lf-snippet-php"><code><span class="lf-ln"> 1</span>  <span class="lf-kw">&lt;?php</span>
+<span class="lf-ln"> 2</span>  <span class="lf-kw">require_once</span> <span class="lf-str">'vendor/autoload.php'</span>;
+<span class="lf-ln"> 3</span>  
+<span class="lf-ln"> 4</span>  <span class="lf-c">// Replace these two values with your BoldSign sandbox values.</span>
+<span class="lf-ln"> 5</span>  <span class="lf-kw">$apiKey</span>     = <span class="lf-str">'&lt;YOUR_API_KEY&gt;'</span>;
+<span class="lf-ln"> 6</span>  <span class="lf-kw">$templateId</span> = <span class="lf-str">'&lt;YOUR_TEMPLATE_ID&gt;'</span>;
+<span class="lf-ln"> 7</span>  
+<span class="lf-ln"> 8</span>  <span class="lf-kw">$config</span> = <span class="lf-cls">BoldSign\Configuration</span>::<span class="lf-prop">getDefaultConfiguration</span>()
+<span class="lf-ln"> 9</span>      -&gt;<span class="lf-prop">setApiKey</span>(<span class="lf-str">'X-API-KEY'</span>, <span class="lf-kw">$apiKey</span>);
+<span class="lf-ln">10</span>  
+<span class="lf-ln">11</span>  <span class="lf-kw">$templateApi</span> = <span class="lf-kw">new</span> <span class="lf-cls">BoldSign\Api\TemplateApi</span>(
+<span class="lf-ln">12</span>      <span class="lf-kw">new</span> <span class="lf-cls">GuzzleHttp\Client</span>(), <span class="lf-kw">$config</span>
+<span class="lf-ln">13</span>  );
+<span class="lf-ln">14</span>  <span class="lf-kw">$documentApi</span> = <span class="lf-kw">new</span> <span class="lf-cls">BoldSign\Api\DocumentApi</span>(
+<span class="lf-ln">15</span>      <span class="lf-kw">new</span> <span class="lf-cls">GuzzleHttp\Client</span>(), <span class="lf-kw">$config</span>
+<span class="lf-ln">16</span>  );
+<span class="lf-ln">17</span>  
+<span class="lf-ln">18</span>  <span class="lf-c">// Sample lease details.</span>
+<span class="lf-ln">19</span>  <span class="lf-kw">$tenantName</span>  = <span class="lf-str">'Jane Smith'</span>;
+<span class="lf-ln">20</span>  <span class="lf-kw">$tenantEmail</span> = <span class="lf-str">'jane@example.com'</span>;
+<span class="lf-ln">21</span>  
+<span class="lf-ln">22</span>  <span class="lf-kw">$role</span> = (<span class="lf-kw">new</span> <span class="lf-cls">BoldSign\Model\Roles</span>())
+<span class="lf-ln">23</span>      -&gt;<span class="lf-prop">setRoleIndex</span>(<span class="lf-num">1</span>)
+<span class="lf-ln">24</span>      -&gt;<span class="lf-prop">setSignerName</span>(<span class="lf-kw">$tenantName</span>)
+<span class="lf-ln">25</span>      -&gt;<span class="lf-prop">setSignerEmail</span>(<span class="lf-kw">$tenantEmail</span>)
+<span class="lf-ln">26</span>      -&gt;<span class="lf-prop">setSignerType</span>(<span class="lf-str">'Signer'</span>)
+<span class="lf-ln">27</span>      -&gt;<span class="lf-prop">setExistingFormFields</span>([
+<span class="lf-ln">28</span>          <span class="lf-c">// These IDs must match field IDs in your BoldSign template.</span>
+<span class="lf-ln">29</span>          (<span class="lf-kw">new</span> <span class="lf-cls">BoldSign\Model\ExistingFormField</span>())-&gt;<span class="lf-prop">setId</span>(<span class="lf-str">'txtTenant'</span>)-&gt;<span class="lf-prop">setValue</span>(<span class="lf-kw">$tenantName</span>),
+<span class="lf-ln">30</span>          (<span class="lf-kw">new</span> <span class="lf-cls">BoldSign\Model\ExistingFormField</span>())-&gt;<span class="lf-prop">setId</span>(<span class="lf-str">'txtHouseAddress'</span>)-&gt;<span class="lf-prop">setValue</span>(<span class="lf-str">'123 Main St'</span>),
+<span class="lf-ln">31</span>          (<span class="lf-kw">new</span> <span class="lf-cls">BoldSign\Model\ExistingFormField</span>())-&gt;<span class="lf-prop">setId</span>(<span class="lf-str">'txtMonthlyRent'</span>)-&gt;<span class="lf-prop">setValue</span>(<span class="lf-str">'$2,500.00'</span>),
+<span class="lf-ln">32</span>          (<span class="lf-kw">new</span> <span class="lf-cls">BoldSign\Model\ExistingFormField</span>())-&gt;<span class="lf-prop">setId</span>(<span class="lf-str">'txtLeaseTerm'</span>)-&gt;<span class="lf-prop">setValue</span>(<span class="lf-str">'12 months'</span>),
+<span class="lf-ln">33</span>      ]);
+<span class="lf-ln">34</span>  
+<span class="lf-ln">35</span>  <span class="lf-kw">$request</span> = (<span class="lf-kw">new</span> <span class="lf-cls">BoldSign\Model\SendForSignFromTemplate</span>())
+<span class="lf-ln">36</span>      -&gt;<span class="lf-prop">setTemplateId</span>(<span class="lf-kw">$templateId</span>)
+<span class="lf-ln">37</span>      -&gt;<span class="lf-prop">setTitle</span>(<span class="lf-str">'Realtor Lease Agreement'</span>)
+<span class="lf-ln">38</span>      -&gt;<span class="lf-prop">setDisableEmails</span>(<span class="lf-kw">true</span>)
+<span class="lf-ln">39</span>      -&gt;<span class="lf-prop">setRoles</span>([ <span class="lf-kw">$role</span> ]);
+<span class="lf-ln">40</span>  
+<span class="lf-ln">41</span>  <span class="lf-c">// Create the lease agreement from the template.</span>
+<span class="lf-ln">42</span>  <span class="lf-kw">$document</span> = <span class="lf-kw">$templateApi</span>-&gt;<span class="lf-prop">sendUsingTemplate</span>(<span class="lf-kw">$request</span>);
+<span class="lf-ln">43</span>  
+<span class="lf-ln">44</span>  <span class="lf-c">// Generate an embedded signing link for in-app signing.</span>
+<span class="lf-ln">45</span>  <span class="lf-kw">$link</span>     = <span class="lf-kw">$documentApi</span>-&gt;<span class="lf-prop">getEmbeddedSignLink</span>(<span class="lf-kw">$document</span>-&gt;<span class="lf-prop">getDocumentId</span>(), <span class="lf-kw">$tenantEmail</span>);
+<span class="lf-ln">46</span>  <span class="lf-kw">$signLink</span> = <span class="lf-kw">$link</span>-&gt;<span class="lf-prop">getSignLink</span>();
+<span class="lf-ln">47</span>  
+<span class="lf-ln">48</span>  <span class="lf-c">// Load $signLink in an iframe in your app.</span>
+<span class="lf-ln">49</span>  <span class="lf-c">// &lt;iframe src="&lt;?= htmlspecialchars($signLink) ?&gt;" width="100%" height="100%"&gt;&lt;/iframe&gt;</span>
+</code></pre>
+
+                        @* Java *@
+                        <pre class="lf-code-pre lf-code-snippet" id="lf-snippet-java"><code><span class="lf-ln"> 1</span>  <span class="lf-kw">import</span> com.boldsign.ApiClient;
+<span class="lf-ln"> 2</span>  <span class="lf-kw">import</span> com.boldsign.api.TemplateApi;
+<span class="lf-ln"> 3</span>  <span class="lf-kw">import</span> com.boldsign.api.DocumentApi;
+<span class="lf-ln"> 4</span>  <span class="lf-kw">import</span> com.boldsign.model.*;
+<span class="lf-ln"> 5</span>  <span class="lf-kw">import</span> java.util.List;
+<span class="lf-ln"> 6</span>  
+<span class="lf-ln"> 7</span>  <span class="lf-kw">public class</span> <span class="lf-cls">LeaseDemo</span> {
+<span class="lf-ln"> 8</span>      <span class="lf-kw">public static void</span> <span class="lf-prop">main</span>(String[] args) <span class="lf-kw">throws</span> Exception {
+<span class="lf-ln"> 9</span>  
+<span class="lf-ln">10</span>          <span class="lf-c">// Replace these two values with your BoldSign sandbox values.</span>
+<span class="lf-ln">11</span>          String apiKey     = <span class="lf-str">"&lt;YOUR_API_KEY&gt;"</span>;
+<span class="lf-ln">12</span>          String templateId = <span class="lf-str">"&lt;YOUR_TEMPLATE_ID&gt;"</span>;
+<span class="lf-ln">13</span>  
+<span class="lf-ln">14</span>          <span class="lf-cls">ApiClient</span> client = <span class="lf-kw">new</span> <span class="lf-cls">ApiClient</span>();
+<span class="lf-ln">15</span>          client.<span class="lf-prop">setApiKey</span>(apiKey);
+<span class="lf-ln">16</span>  
+<span class="lf-ln">17</span>          <span class="lf-cls">TemplateApi</span> templateApi = <span class="lf-kw">new</span> <span class="lf-cls">TemplateApi</span>(client);
+<span class="lf-ln">18</span>          <span class="lf-cls">DocumentApi</span> documentApi = <span class="lf-kw">new</span> <span class="lf-cls">DocumentApi</span>(client);
+<span class="lf-ln">19</span>  
+<span class="lf-ln">20</span>          <span class="lf-c">// Sample lease details.</span>
+<span class="lf-ln">21</span>          String tenantName  = <span class="lf-str">"Jane Smith"</span>;
+<span class="lf-ln">22</span>          String tenantEmail = <span class="lf-str">"jane@example.com"</span>;
+<span class="lf-ln">23</span>  
+<span class="lf-ln">24</span>          <span class="lf-cls">Roles</span> role = <span class="lf-kw">new</span> <span class="lf-cls">Roles</span>()
+<span class="lf-ln">25</span>              .<span class="lf-prop">roleIndex</span>(<span class="lf-num">1</span>)
+<span class="lf-ln">26</span>              .<span class="lf-prop">signerName</span>(tenantName)
+<span class="lf-ln">27</span>              .<span class="lf-prop">signerEmail</span>(tenantEmail)
+<span class="lf-ln">28</span>              .<span class="lf-prop">signerType</span>(<span class="lf-cls">SignerType</span>.<span class="lf-prop">SIGNER</span>)
+<span class="lf-ln">29</span>              <span class="lf-c">// These IDs must match field IDs in your BoldSign template.</span>
+<span class="lf-ln">30</span>              .<span class="lf-prop">existingFormFields</span>(List.of(
+<span class="lf-ln">31</span>                  <span class="lf-kw">new</span> <span class="lf-cls">ExistingFormField</span>().<span class="lf-prop">id</span>(<span class="lf-str">"txtTenant"</span>).<span class="lf-prop">value</span>(tenantName),
+<span class="lf-ln">32</span>                  <span class="lf-kw">new</span> <span class="lf-cls">ExistingFormField</span>().<span class="lf-prop">id</span>(<span class="lf-str">"txtHouseAddress"</span>).<span class="lf-prop">value</span>(<span class="lf-str">"123 Main St"</span>),
+<span class="lf-ln">33</span>                  <span class="lf-kw">new</span> <span class="lf-cls">ExistingFormField</span>().<span class="lf-prop">id</span>(<span class="lf-str">"txtMonthlyRent"</span>).<span class="lf-prop">value</span>(<span class="lf-str">"$2,500.00"</span>),
+<span class="lf-ln">34</span>                  <span class="lf-kw">new</span> <span class="lf-cls">ExistingFormField</span>().<span class="lf-prop">id</span>(<span class="lf-str">"txtLeaseTerm"</span>).<span class="lf-prop">value</span>(<span class="lf-str">"12 months"</span>)
+<span class="lf-ln">35</span>              ));
+<span class="lf-ln">36</span>  
+<span class="lf-ln">37</span>          <span class="lf-cls">SendForSignFromTemplate</span> request = <span class="lf-kw">new</span> <span class="lf-cls">SendForSignFromTemplate</span>()
+<span class="lf-ln">38</span>              .<span class="lf-prop">templateId</span>(templateId)
+<span class="lf-ln">39</span>              .<span class="lf-prop">title</span>(<span class="lf-str">"Realtor Lease Agreement"</span>)
+<span class="lf-ln">40</span>              .<span class="lf-prop">disableEmails</span>(<span class="lf-kw">true</span>)
+<span class="lf-ln">41</span>              .<span class="lf-prop">roles</span>(List.of(role));
+<span class="lf-ln">42</span>  
+<span class="lf-ln">43</span>          <span class="lf-c">// Create the lease agreement from the template.</span>
+<span class="lf-ln">44</span>          <span class="lf-cls">DocumentCreated</span> document = templateApi.<span class="lf-prop">sendUsingTemplate</span>(request);
+<span class="lf-ln">45</span>  
+<span class="lf-ln">46</span>          <span class="lf-c">// Generate an embedded signing link for in-app signing.</span>
+<span class="lf-ln">47</span>          <span class="lf-cls">EmbeddedSigningLink</span> link = documentApi.<span class="lf-prop">getEmbeddedSignLink</span>(
+<span class="lf-ln">48</span>              document.<span class="lf-prop">getDocumentId</span>(), tenantEmail);
+<span class="lf-ln">49</span>          String signLink = link.<span class="lf-prop">getSignLink</span>();
+<span class="lf-ln">50</span>  
+<span class="lf-ln">51</span>          <span class="lf-c">// Load signLink in an iframe in your app.</span>
+<span class="lf-ln">52</span>          <span class="lf-c">// webView.loadUrl(signLink);</span>
+<span class="lf-ln">53</span>      }
+<span class="lf-ln">54</span>  }
+</code></pre>
+
+                        @* Node *@
+                        <pre class="lf-code-pre lf-code-snippet" id="lf-snippet-node"><code><span class="lf-ln"> 1</span>  <span class="lf-kw">import</span> { <span class="lf-cls">TemplateApi</span>, <span class="lf-cls">FormField</span>, <span class="lf-cls">SendForSignFromTemplateForm</span> } <span class="lf-kw">from</span> <span class="lf-str">"boldsign"</span>;
+<span class="lf-ln"> 2</span>  
+<span class="lf-ln"> 3</span>  <span class="lf-kw">const</span> templateApi = <span class="lf-kw">new</span> <span class="lf-cls">TemplateApi</span>(<span class="lf-str">"https://api.boldsign.com"</span>);
+<span class="lf-ln"> 4</span>  templateApi.<span class="lf-prop">setApiKey</span>(<span class="lf-str">"YOUR_API_KEY"</span>);
+<span class="lf-ln"> 5</span>  
+<span class="lf-ln"> 6</span>  <span class="lf-kw">const</span> role = <span class="lf-kw">new</span> <span class="lf-cls">Role</span>();
+<span class="lf-ln"> 7</span>  role.<span class="lf-prop">roleIndex</span> = <span class="lf-num">1</span>;
+<span class="lf-ln"> 8</span>  role.<span class="lf-prop">signerName</span> = <span class="lf-str">"Jane Smith"</span>;
+<span class="lf-ln"> 9</span>  role.<span class="lf-prop">signerEmail</span> = <span class="lf-str">"jane@example.com"</span>;
+<span class="lf-ln">10</span>  role.<span class="lf-prop">signerType</span> = <span class="lf-cls">Role</span>.<span class="lf-cls">SignerTypeEnum</span>.<span class="lf-prop">Signer</span>;
+<span class="lf-ln">11</span>  
+<span class="lf-ln">12</span>  <span class="lf-c">// These IDs must match field IDs in your BoldSign template.</span>
+<span class="lf-ln">13</span>  role.<span class="lf-prop">existingFormFields</span> = [
+<span class="lf-ln">14</span>      { id: <span class="lf-str">"txtTenant"</span>, value: tenantName },
+<span class="lf-ln">15</span>      { id: <span class="lf-str">"txtHouseAddress"</span>, value: <span class="lf-str">"123 Main St"</span> },
+<span class="lf-ln">16</span>      { id: <span class="lf-str">"txtMonthlyRent"</span>, value: <span class="lf-str">"$2,500.00"</span> },
+<span class="lf-ln">17</span>      { id: <span class="lf-str">"txtLeaseTerm"</span>, value: <span class="lf-str">"12 months"</span> },
+<span class="lf-ln">18</span>  ];
+<span class="lf-ln">19</span>  
+<span class="lf-ln">20</span>  <span class="lf-kw">const</span> sendForSignFromTemplate = <span class="lf-kw">new</span> <span class="lf-cls">SendForSignFromTemplateForm</span>();
+<span class="lf-ln">21</span>  sendForSignFromTemplate.<span class="lf-prop">title</span> = <span class="lf-str">"Realtor Lease Agreement"</span>;
+<span class="lf-ln">22</span>  sendForSignFromTemplate.<span class="lf-prop">disableEmails</span> = <span class="lf-kw">true</span>;
+<span class="lf-ln">23</span>  sendForSignFromTemplate.<span class="lf-prop">roles</span> = [role];
+<span class="lf-ln">24</span>  
+<span class="lf-ln">25</span>  <span class="lf-kw">const</span> documentCreated = templateApi.<span class="lf-prop">sendUsingTemplate</span>(<span class="lf-str">"YOUR_TEMPLATE_ID"</span>, sendForSignFromTemplate);
+<span class="lf-ln">26</span>  
+<span class="lf-ln">27</span>  <span class="lf-c">// Generate an embedded signing link for in-app signing.</span>
+<span class="lf-ln">28</span>  <span class="lf-kw">const</span> embeddedSigningLink = documentApi.<span class="lf-prop">getEmbeddedSignLink</span>(documentCreated.documentId, signerEmail);
+<span class="lf-ln">29</span>  
+<span class="lf-ln">30</span>  <span class="lf-c">// Load signLink in an iframe in your app.</span>
+<span class="lf-ln">31</span>  <span class="lf-c">// &lt;iframe src="${embeddedSigningLink}" width="100%" height="100%"&gt;&lt;/iframe&gt;</span>
+</code></pre>
+
+                    </div>
+
+                    <div class="lf-code-panel__footer">
+                        <div class="lf-code-panel__footer-info">
+                            <div class="lf-code-panel__footer-icon">
+                                <i class="bi bi-question-circle"></i>
+                            </div>
+                            <div class="lf-code-panel__footer-text">
+                                This example demonstrates how to send a lease agreement for eSignature using BoldSign API.
+                            </div>
+                        </div>
+                        <div class="lf-code-panel__footer-links">
+                            <a href="https://boldsign.com/blogs/integrating-boldsign-esignature-apis-in-asp-net-core-app/" target="_blank" rel="noopener" class="lf-code-link">
+                                <i class="bi bi-journal-text me-1"></i>Reference Blog
+                            </a>
+                            <a href="https://developers.boldsign.com/documents/send-document-from-template/" target="_blank" rel="noopener" class="lf-code-link">
+                                <i class="bi bi-file-earmark-code me-1"></i>API Reference
+                            </a>
+                            <a href="https://developers.boldsign.com/embedded-signing/embed-in-an-iFrame/" target="_blank" rel="noopener" class="lf-code-link">
+                                <i class="bi bi-window me-1"></i>Embed in iFrame
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        (function () {
+            // ── Tab switching ──────────────────────────────────────
+            var tabs = document.querySelectorAll('#lf-tabs .lf-code-tab');
+            tabs.forEach(function (tab) {
+                tab.addEventListener('click', function () {
+                    // deactivate all tabs & snippets
+                    tabs.forEach(function (t) { t.classList.remove('lf-code-tab--active'); });
+                    document.querySelectorAll('.lf-code-snippet').forEach(function (s) {
+                        s.classList.remove('lf-code-snippet--active');
+                    });
+
+                    // activate clicked tab & matching snippet
+                    tab.classList.add('lf-code-tab--active');
+                    var lang = tab.getAttribute('data-lang');
+                    var snippet = document.getElementById('lf-snippet-' + lang);
+                    if (snippet) snippet.classList.add('lf-code-snippet--active');
+
+                    // reset copy button
+                    var btn = document.getElementById('lf-copy-btn');
+                    if (btn) btn.innerHTML = '<i class="bi bi-clipboard me-1"></i>Copy';
+                });
+            });
+
+            // ── Copy button ────────────────────────────────────────
+            var btn = document.getElementById('lf-copy-btn');
+            if (!btn) return;
+            btn.addEventListener('click', function () {
+                var active = document.querySelector('.lf-code-snippet--active');
+                if (!active) return;
+                var text = active.innerText || active.textContent || '';
+                // strip leading line-number columns (e.g. " 1  " or "10  ")
+                text = text.replace(/^\s*\d+\s{1,2}/gm, '').trim();
+                navigator.clipboard.writeText(text).then(function () {
+                    btn.innerHTML = '<i class="bi bi-check2 me-1"></i>Copied!';
+                    setTimeout(function () {
+                        btn.innerHTML = '<i class="bi bi-clipboard me-1"></i>Copy';
+                    }, 2000);
+                });
+            });
+        })();
+    </script>
+}

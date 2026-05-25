@@ -1,0 +1,7 @@
+@{
+    var url = ViewBag.ButtonUrl as string ?? "#";
+    var text = ViewBag.ButtonText as string ?? "Secondary";
+    var extraClass = ViewBag.ButtonClass as string ?? "";
+}
+
+<a href="@url" class="btn agreement-btn-secondary @extraClass">@text</a>

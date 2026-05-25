@@ -1,0 +1,32 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://api.boldsign.com/",
+      "service-desc": [
+        {
+          "href": "https://api.boldsign.com/swagger/v1/swagger.json",
+          "type": "application/vnd.oai.openapi+json;version=3.0"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://developers.boldsign.com/api-overview/getting-started/",
+          "type": "text/html"
+        }
+      ],
+      "status": [
+        {
+          "href": "https://status.boldsign.com/",
+          "type": "text/html"
+        }
+      ],
+       "related": [
+        {
+            "href": "https://cubeflakes-realtorleasedemo.boldsign.com/",
+            "type": "text/html",
+            "title": "Realtor Lease Demo — BoldSign APIs"
+        }
+      ]
+    }
+  ]
+}

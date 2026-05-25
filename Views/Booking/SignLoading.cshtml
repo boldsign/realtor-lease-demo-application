@@ -1,0 +1,51 @@
+@model CubeflakesRealtorDemo.Models.BookingModel
+@{
+    ViewData["Title"] = "Preparing your Lease Agreement (Demo purpose)...";
+}
+
+<div class="dpg-card sign-loading-card">
+
+    <div class="sign-loading-spinner-wrap">
+        <div class="sign-loading-spinner"></div>
+    </div>
+
+    <h2 class="dpg-card-heading sign-loading-heading">Preparing Your Lease Agreement <strong>(Demo purpose)</strong></h2>
+    <p class="dpg-card-body">Please wait while we generate your document for signing.</p>
+    <p class="dpg-card-body">Start the end-to-end realtor lease signing <strong>demo</strong> for this property.</p>
+
+    <div class="summary-pill sign-loading-pill">
+        <i class="bi bi-shield-lock"></i>
+        <small>Your information is securely transmitted via BoldSign. <strong>(For demo purposes only)</strong></small>
+    </div>
+
+</div>
+
+<form id="autoSubmitForm" method="post" asp-controller="Signing" asp-action="Sign">
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="PropertyName"  value="@Model.PropertyName" />
+    <input type="hidden" name="ImageUrl"      value="@Model.ImageUrl" />
+    <input type="hidden" name="Address"       value="@Model.Address" />
+    <input type="hidden" name="MonthlyRent"   value="@Model.MonthlyRent" />
+    <input type="hidden" name="Bedrooms"      value="@Model.Bedrooms" />
+    <input type="hidden" name="Bathrooms"     value="@Model.Bathrooms" />
+    <input type="hidden" name="Parking"       value="@Model.Parking" />
+    <input type="hidden" name="LeaseTerm"     value="@Model.LeaseTerm" />
+    <input type="hidden" name="PetPolicy"     value="@Model.PetPolicy" />
+    <input type="hidden" name="FullName"      value="@Model.FullName" />
+    <input type="hidden" name="Email"         value="@Model.Email" />
+    <input type="hidden" name="Phone"         value="@Model.Phone" />
+    <input type="hidden" name="MoveInDate"    value="@Model.MoveInDate?.ToString("yyyy-MM-dd")" />
+</form>
+
+<style>
+    @@keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+</style>
+
+<script>
+    // Auto-submit so the controller creates the BoldSign document and returns the Sign view with the iframe.
+    window.addEventListener('load', function () {
+        document.getElementById('autoSubmitForm').submit();
+    });
+</script>

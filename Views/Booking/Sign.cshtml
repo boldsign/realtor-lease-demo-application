@@ -1,0 +1,45 @@
+@model CubeflakesRealtorDemo.Models.BookingModel
+@{
+    ViewData["Title"] = "e-Sign Agreement";
+}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="signpage-wrapper">
+            <div class="signpage">
+            <h2 class="dpg-card-heading">Try eSigning a Sample Lease Agreement</h2>
+            <p class="dpg-card-body">This is not a real lease agreement or legally binding contract. It is a demo-only signing experience. Your sample document and signature are not stored, shared, or used for any purpose, so it’s safe to try.</p>
+
+            <div class="sign-spacer"></div>
+
+            <div class="sign-iframe-outer">
+                <div class="sign-iframe-border">
+                    @if (!string.IsNullOrEmpty(Model.SignLink))
+                    {
+                        <div class="sign-iframe-ratio">
+                            <iframe src="@Model.SignLink" class="sign-iframe" title="Embedded Signing"></iframe>
+                        </div>
+                    }
+                    else if (!string.IsNullOrEmpty(ViewBag.ErrorMessage as string))
+                    {
+                        <div class="summary-pill sign-error-pill">
+                            <i class="bi bi-exclamation-circle text-danger"></i>
+                            <small class="text-danger">@ViewBag.ErrorMessage</small>
+                        </div>
+                        <div class="sign-back-wrap">
+                            <a asp-controller="Home" asp-action="Index" class="btn btn-brand">
+                                <i class="bi bi-arrow-left me-2"></i>Back to Properties
+                            </a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="sign-unavailable-msg">Signing session not available yet. Please try again shortly.</div>
+                    }
+                </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/signdocument.js" asp-append-version="true"></script>
+}

@@ -1,0 +1,11 @@
+@{
+    var url = ViewBag.BackUrl as string ?? "/";
+    var text = ViewBag.BackText as string ?? "Back to Properties";
+}
+
+<div class="d-flex justify-content-end">
+    <a href="@url" class="btn back-property-btn">
+        <i class="bi bi-arrow-left me-2"></i>
+        @text
+    </a>
+</div>

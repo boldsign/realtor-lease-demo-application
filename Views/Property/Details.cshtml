@@ -1,0 +1,142 @@
+@model PropertyModel
+@{
+    ViewData["Title"] = Model.Name + " — Property Details";
+    ViewBag.Breadcrumb = new[] {
+        new { Text = "Home", Url = "/", Active = false },
+        new { Text = Model.Name, Url = "#", Active = true }
+    };
+
+    ViewBag.BackUrl = "/";
+    ViewBag.BackText = "Back to Properties";
+}
+
+<div class="d-flex flex-wrap align-items-center gap-2 mb-4">
+        <a href="/" class="btn btn-brand fw-semibold ms-auto">
+            <i class="bi bi-arrow-left me-2"></i>
+            Back to Properties
+        </a>
+    </div>
+
+@* ── Name + Address + Price — shown only on single-column (mobile) layout ─ *@
+<div class="dpg-card mb-3 d-lg-none">
+    <h1 class="dpg-prop-name mb-3">@Model.Name</h1>
+    <p class="dpg-address mb-3"><i class="bi bi-geo-alt-fill me-1"></i>@Model.Address</p>
+    <div class="dpg-price-block mt-4">
+        <span class="dpg-price-value">@Model.MonthlyRent.ToString("C0")</span>
+        <span class="dpg-price-per">/ month</span>
+    </div>
+</div>
+
+<div class="dpg-layout">
+
+    @* ══════════════════════════════════════════════════
+       LEFT COLUMN
+    ═══════════════════════════════════════════════════ *@
+    <div class="dpg-left">
+
+        @* ── Hero image ────────────────────────────── *@
+        <div class="dpg-hero">
+            <span class="dpg-bhk-badge">@Model.Bedrooms BHK</span>
+            <img src="@Model.ImageUrl" alt="@Model.Name" class="dpg-hero-img" />
+        </div>
+
+        @* ── About ─────────────────────────────────── *@
+        <div class="dpg-card mb-3">
+            <h2 class="dpg-card-heading">About This Property</h2>
+            <p class="dpg-card-body">@Model.Description</p>
+        </div>
+
+        @* ── Features & Amenities ───────────────────── *@
+        <div class="dpg-card mb-3">
+            <h2 class="dpg-card-heading">Features &amp; Amenities</h2>
+            <div class="dpg-amenities">
+                <div class="dpg-amenity"><i class="bi bi-snow2"></i> Air Conditioning</div>
+                <div class="dpg-amenity"><i class="bi bi-wifi"></i> Wi-Fi</div>
+                <div class="dpg-amenity"><i class="bi bi-cup-hot"></i> Modular Kitchen</div>
+                <div class="dpg-amenity"><i class="bi bi-lightning-charge"></i> Power Backup</div>
+                <div class="dpg-amenity"><i class="bi bi-tree"></i> Private Garden</div>
+                <div class="dpg-amenity"><i class="bi bi-shield-check"></i> Security System</div>
+            </div>
+        </div>
+
+    </div>
+
+    @* ══════════════════════════════════════════════════
+       RIGHT COLUMN — sticky sidebar
+    ═══════════════════════════════════════════════════ *@
+    <div class="dpg-right-outer">
+    <div class="dpg-right">
+
+        @* ── Name + Address + Price — shown only on two-column (desktop) layout ─ *@
+        <div class="dpg-card mb-3 d-none d-lg-block">
+            <h1 class="dpg-prop-name mb-3">@Model.Name</h1>
+            <p class="dpg-address mb-3"><i class="bi bi-geo-alt-fill me-1"></i>@Model.Address</p>
+            <div class="dpg-price-block mt-4">
+                <span class="dpg-price-value">@Model.MonthlyRent.ToString("C0")</span>
+                <span class="dpg-price-per">/ month</span>
+            </div>
+        </div>
+
+         @* ── Rent This Home CTA ──────────────────────── *@
+        <div class="dpg-card text-center mb-3">
+            <h2 class="dpg-card-heading">Ready to Move In?</h2>
+            <p class="dpg-card-subtext">Start a guided demo to see how a lease agreement can be generated and opened in an embedded signing experience.</p>
+            <form asp-controller="Booking" asp-action="Start" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="PropertyName"  value="@Model.Name" />
+                <input type="hidden" name="ImageUrl"      value="@Model.ImageUrl" />
+                <input type="hidden" name="Address"       value="@Model.Address" />
+                <input type="hidden" name="MonthlyRent"   value="@Model.MonthlyRent" />
+                <input type="hidden" name="Bedrooms"      value="@Model.Bedrooms" />
+                <input type="hidden" name="Bathrooms"     value="@Model.Bathrooms" />
+                <input type="hidden" name="Parking"       value="@Model.Parking" />
+                <input type="hidden" name="LeaseTerm"     value="@Model.LeaseTerm" />
+                <input type="hidden" name="PetPolicy"     value="@Model.PetPolicy" />
+                <input type="hidden" name="AvailableFrom" value="@Model.AvailableFrom.ToString("yyyy-MM-dd")" />
+                <button type="submit" class="btn btn-brand w-100 fw-semibold">
+                    <i class="bi bi-house-check me-2"></i>Rent This Home
+                </button>
+            </form>
+        </div>
+
+        @* ── Property Details ───────────────────────── *@
+        <div class="dpg-card">
+            <h2 class="dpg-card-heading propertydet">Property Details</h2>
+            <div class="dpg-overview-grid">
+                <div class="dpg-overview-item">
+                    <span class="dpg-ov-label">Bedrooms</span>
+                    <span class="dpg-ov-value">@Model.Bedrooms</span>
+                </div>
+                <div class="dpg-overview-item">
+                    <span class="dpg-ov-label">Bathrooms</span>
+                    <span class="dpg-ov-value">@Model.Bathrooms</span>
+                </div>
+                <div class="dpg-overview-item">
+                    <span class="dpg-ov-label">Parking</span>
+                    <span class="dpg-ov-value">@Model.Parking spot@(Model.Parking != 1 ? "s" : "")</span>
+                </div>
+                <div class="dpg-overview-item">
+                    <span class="dpg-ov-label">Pet Policy</span>
+                    <span class="dpg-ov-value">@Model.PetPolicy</span>
+                </div>
+                <div class="dpg-overview-item">
+                    <span class="dpg-ov-label">Security Deposit</span>
+                    <span class="dpg-ov-value">@Model.SecurityDeposit.ToString("C0")</span>
+                </div>
+                <div class="dpg-overview-item">
+                    <span class="dpg-ov-label">Lease Duration</span>
+                    <span class="dpg-ov-value">@Model.LeaseTerm Months</span>
+                </div>
+                <div class="dpg-overview-item">
+                    <span class="dpg-ov-label">Available Move-in</span>
+                    <span class="dpg-ov-value">@Model.AvailableFrom.ToString("MMM d, yyyy")</span>
+                </div>
+            </div>
+        </div>
+
+       
+
+    </div>
+    </div>@* /.dpg-right-outer *@
+
+</div>
