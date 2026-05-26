@@ -68,7 +68,7 @@
                             <div class="lf-input-wrap">
                                 <input asp-for="Email"
                                        class="lf-input"
-                                       placeholder="jane@example.com"
+                                       placeholder="jane@boldsign.dev"
                                        autocomplete="email" />
                             </div>
                             <span asp-validation-for="Email" class="lf-error"></span>
@@ -159,7 +159,7 @@
 <span class="lf-ln">11</span>  
 <span class="lf-ln">12</span>  <span class="lf-c">// Sample lease details.</span>
 <span class="lf-ln">13</span>  <span class="lf-kw">var</span> tenantName = <span class="lf-str">"Jane Smith"</span>;
-<span class="lf-ln">14</span>  <span class="lf-kw">var</span> tenantEmail = <span class="lf-str">"jane@example.com"</span>;
+<span class="lf-ln">14</span>  <span class="lf-kw">var</span> tenantEmail = <span class="lf-str">"jane@boldsign.dev"</span>;
 <span class="lf-ln">15</span>  
 <span class="lf-ln">16</span>  <span class="lf-kw">var</span> documentDetails = <span class="lf-kw">new</span> <span class="lf-cls">SendForSignFromTemplate</span>
 <span class="lf-ln">17</span>  {
@@ -218,7 +218,7 @@
 <span class="lf-ln"> 9</span>       {
 <span class="lf-ln">10</span>         "roleIndex": 1,
 <span class="lf-ln">11</span>         "signerName": "Jane Smith",
-<span class="lf-ln">12</span>         "signerEmail": "jane@example.com",
+<span class="lf-ln">12</span>         "signerEmail": "jane@boldsign.dev",
 <span class="lf-ln">13</span>         "signerType": "Signer",
 <span class="lf-ln">14</span>         "existingFormFields": [
 <span class="lf-ln">15</span>           {"id": "txtTenant",      "value": "Jane Smith"},
@@ -246,7 +246,7 @@
 <span class="lf-ln">12</span>  
 <span class="lf-ln">13</span>      <span class="lf-c"># Sample lease details.</span>
 <span class="lf-ln">14</span>      tenant_name  = <span class="lf-str">"Jane Smith"</span>
-<span class="lf-ln">15</span>      tenant_email = <span class="lf-str">"jane@example.com"</span>
+<span class="lf-ln">15</span>      tenant_email = <span class="lf-str">"jane@boldsign.dev"</span>
 <span class="lf-ln">16</span>  
 <span class="lf-ln">17</span>      send_request = boldsign.<span class="lf-cls">SendForSignFromTemplate</span>(
 <span class="lf-ln">18</span>          template_id  = template_id,
@@ -301,7 +301,7 @@
 <span class="lf-ln">17</span>  
 <span class="lf-ln">18</span>  <span class="lf-c">// Sample lease details.</span>
 <span class="lf-ln">19</span>  <span class="lf-kw">$tenantName</span>  = <span class="lf-str">'Jane Smith'</span>;
-<span class="lf-ln">20</span>  <span class="lf-kw">$tenantEmail</span> = <span class="lf-str">'jane@example.com'</span>;
+<span class="lf-ln">20</span>  <span class="lf-kw">$tenantEmail</span> = <span class="lf-str">'jane@boldsign.dev'</span>;
 <span class="lf-ln">21</span>  
 <span class="lf-ln">22</span>  <span class="lf-kw">$role</span> = (<span class="lf-kw">new</span> <span class="lf-cls">BoldSign\Model\Roles</span>())
 <span class="lf-ln">23</span>      -&gt;<span class="lf-prop">setRoleIndex</span>(<span class="lf-num">1</span>)
@@ -355,7 +355,7 @@
 <span class="lf-ln">19</span>  
 <span class="lf-ln">20</span>          <span class="lf-c">// Sample lease details.</span>
 <span class="lf-ln">21</span>          String tenantName  = <span class="lf-str">"Jane Smith"</span>;
-<span class="lf-ln">22</span>          String tenantEmail = <span class="lf-str">"jane@example.com"</span>;
+<span class="lf-ln">22</span>          String tenantEmail = <span class="lf-str">"jane@boldsign.dev"</span>;
 <span class="lf-ln">23</span>  
 <span class="lf-ln">24</span>          <span class="lf-cls">Roles</span> role = <span class="lf-kw">new</span> <span class="lf-cls">Roles</span>()
 <span class="lf-ln">25</span>              .<span class="lf-prop">roleIndex</span>(<span class="lf-num">1</span>)
@@ -399,7 +399,7 @@
 <span class="lf-ln"> 6</span>  <span class="lf-kw">const</span> role = <span class="lf-kw">new</span> <span class="lf-cls">Role</span>();
 <span class="lf-ln"> 7</span>  role.<span class="lf-prop">roleIndex</span> = <span class="lf-num">1</span>;
 <span class="lf-ln"> 8</span>  role.<span class="lf-prop">signerName</span> = <span class="lf-str">"Jane Smith"</span>;
-<span class="lf-ln"> 9</span>  role.<span class="lf-prop">signerEmail</span> = <span class="lf-str">"jane@example.com"</span>;
+<span class="lf-ln"> 9</span>  role.<span class="lf-prop">signerEmail</span> = <span class="lf-str">"jane@boldsign.dev"</span>;
 <span class="lf-ln">10</span>  role.<span class="lf-prop">signerType</span> = <span class="lf-cls">Role</span>.<span class="lf-cls">SignerTypeEnum</span>.<span class="lf-prop">Signer</span>;
 <span class="lf-ln">11</span>  
 <span class="lf-ln">12</span>  <span class="lf-c">// These IDs must match field IDs in your BoldSign template.</span>

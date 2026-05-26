@@ -53,7 +53,7 @@ public class BookingController : Controller
             PetPolicy     = PetPolicy    ?? "",
             AvailableFrom = AvailableFrom,
             FullName      = "Jane Smith",
-            Email         = "jane@example.com",
+            Email         = "jane@boldsign.dev",
             Phone         = "+1 (415) 555-0134",
             MoveInDate    = AvailableFrom != default
                                 ? AvailableFrom.ToDateTime(TimeOnly.MinValue)
