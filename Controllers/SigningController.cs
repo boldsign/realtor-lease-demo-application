@@ -66,8 +66,6 @@ namespace CubeflakesRealtorDemo.Controllers
                         SignerType = SignerType.Signer,
                         ExistingFormFields = new List<ExistingFormField>()
                         {
-                            new ExistingFormField() { Id = "txtOwner",         Value = "Scott Bennett" },
-                            new ExistingFormField() { Id = "txtOwnerName",     Value = "Scott Bennett" },
                             new ExistingFormField() { Id = "txtTenant",        Value = templateDetails.FullName ?? string.Empty },
                             new ExistingFormField() { Id = "txtTenantName",    Value = templateDetails.FullName ?? string.Empty },
                             new ExistingFormField() { Id = "txtHouseAddress",  Value = templateDetails.Address ?? string.Empty },
