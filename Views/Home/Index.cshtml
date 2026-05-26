@@ -1,0 +1,24 @@
+@model HomeIndexViewModel
+@{
+    ViewData["Title"] = "Home";
+}
+<header class="mb-4">
+    <span class="section-mini-label">
+        <i class="bi bi-house-heart"></i>
+        Featured Listings
+    </span>
+    <h1 class="homepage-title">Real Estate Lease Agreement Demo</h1>
+    <p class="homepage-subtitle desc1">See how to generate lease agreements with prefilled tenant, landlord, and property details using the BoldSign API. Tenants can review and sign the agreement directly within your app.</p>
+    <p class="homepage-subtitle desc2"><strong>This is a demo-only workflow</strong> designed for testing and evaluation. No real lease agreement is created through this demo.</p>
+</header>
+
+<section id="featured-properties" class="mb-5">
+    <div class="properties-grid">
+        @foreach (var property in Model.FeaturedProperties)
+        {
+            @await Html.PartialAsync("_PropertyCard", property)
+        }
+    </div>
+</section>
+
+

@@ -1,0 +1,17 @@
+{
+  "serverInfo": {
+    "name": "Cubeflakes Realtor Lease Demo - BoldSign MCP",
+    "version": "1.0.0",
+    "description": "MCP discovery card for the Cubeflakes Realtor Lease Demo integrating BoldSign document signing."
+  },
+  "transports": [
+    {
+      "type": "http",
+      "url": "https://cubeflakes-realtorleasedemo.boldsign.com/"
+    }
+  ],
+  "capabilities": {
+    "tools": true,
+    "resources": true
+  }
+}

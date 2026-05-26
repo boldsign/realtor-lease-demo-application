@@ -1,0 +1,39 @@
+<nav class="navbar navbar-expand-600 navbar-light container py-0 site-nav position-relative">
+    <a class="navbar-brand text-decoration-none" asp-controller="Home" asp-action="Index">
+        <img src="~/images/cubeflakes-logo.png" alt="Cubeflakes" class="brand-logo" />
+    </a>
+
+    <button class="navbar-toggler border-0 shadow-none nav-toggler-mobile" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    @*-- Desktop nav links --*@
+    <div class="ms-auto nav-links-desktop align-items-center gap-3">
+        <a class="nav-link" href="https://github.com/boldsign/realtor-lease-demo-application" target="_blank" rel="noopener noreferrer">GitHub Source</a>
+        <a class="nav-link" asp-controller="Home" asp-action="About">About</a>
+    </div>
+
+    @*-- Mobile dropdown overlay --*@
+    <div class="collapse mobile-nav-collapse" id="mainNavbar">
+        <div class="mobile-nav-menu">
+            <a class="mobile-nav-item text-decoration-none" href="https://github.com/boldsign/realtor-lease-demo-application" target="_blank" rel="noopener noreferrer">
+                <div class="mobile-nav-item__icon">
+                    <i class="bi bi-github"></i>
+                </div>
+                <div class="mobile-nav-item__text">
+                    <span class="mobile-nav-item__title">GitHub Source</span>
+                    <span class="mobile-nav-item__desc">View source code on GitHub</span>
+                </div>
+            </a>
+            <a class="mobile-nav-item text-decoration-none" asp-controller="Home" asp-action="About">
+                <div class="mobile-nav-item__icon">
+                    <i class="bi bi-info-circle"></i>
+                </div>
+                <div class="mobile-nav-item__text">
+                    <span class="mobile-nav-item__title">About</span>
+                    <span class="mobile-nav-item__desc">Learn more about this application</span>
+                </div>
+            </a>
+        </div>
+    </div>
+</nav>

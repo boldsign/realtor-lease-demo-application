@@ -1,0 +1,19 @@
+@model SectionTitleViewModel
+
+<div class="section-title">
+    <div>
+        @if (!string.IsNullOrWhiteSpace(Model.Eyebrow))
+        {
+            <span class="section-mini-label">@Model.Eyebrow</span>
+        }
+        <h2 class="section-title__heading h3 fw-bold">@Model.Title</h2>
+        @if (!string.IsNullOrWhiteSpace(Model.Subtitle))
+        {
+            <p class="section-title__subtitle">@Model.Subtitle</p>
+        }
+    </div>
+    @if (!string.IsNullOrWhiteSpace(Model.ActionText) && !string.IsNullOrWhiteSpace(Model.ActionUrl))
+    {
+        <a class="btn btn-brand-outline" href="@Model.ActionUrl">@Model.ActionText</a>
+    }
+</div>

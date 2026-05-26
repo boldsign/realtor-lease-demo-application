@@ -1,0 +1,34 @@
+@{
+    var items = ViewBag.Breadcrumb as IEnumerable<dynamic> ?? new List<dynamic>();
+}
+
+<style>
+.breadcrumb {
+    padding-left: 0 !important;
+}
+
+.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
+    content: ">";
+    padding: 0 0.5rem;
+    color: #6c757d;
+}
+</style>
+
+<nav aria-label="breadcrumb" class="mb-0">
+    <ol class="breadcrumb mb-0 breadcrumb-transparent">
+        @foreach (var item in items)
+        {
+            var text = item.Text as string ?? "";
+            var url = item.Url as string ?? "#";
+            var active = item.Active as bool? ?? false;
+            if (active)
+            {
+                <li class="breadcrumb-item active breadcrumb-active" aria-current="page">@text</li>
+            }
+            else
+            {
+                <li class="breadcrumb-item text-secondary"><a href="@url">@text</a></li>
+            }
+        }
+    </ol>
+</nav>

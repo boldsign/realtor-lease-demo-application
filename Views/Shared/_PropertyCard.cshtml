@@ -1,0 +1,76 @@
+@* ============================================================
+   _PropertyCard.cshtml  —  Reusable property listing card
+   Model   : PropertyModel
+   Layout  : [Image + BHK badge top-left]
+             [Name]
+             [Location]
+             [Info grid: Rent | Security Deposit | Available | Lease Term]
+             [View Details CTA]
+   ============================================================ *@
+@model PropertyModel
+
+<article class="property-card h-100">
+
+    @* ── Image / Media block ──────────────────────────────── *@
+    <div class="property-card__media">
+
+        <img src="@Model.ImageUrl"
+             class="property-card__image"
+             alt="Photo of @Model.Name"
+             loading="lazy" />
+
+        @* BHK badge — top-left corner *@
+        <span class="property-card__bhk-badge">
+            @Model.Bedrooms BHK
+        </span>
+
+    </div>
+
+    @* ── Body block ─────────────────────────────────────────── *@
+    <div class="property-card__body">
+
+        @* ── Property Name ────────────────────────────────── *@
+        <h3 class="property-card__name mb-1">@Model.Name</h3>
+
+        @* ── Location ─────────────────────────────────────── *@
+        <p class="property-card__address mb-3">
+            <i class="bi bi-geo-alt property-card__address-icon"></i>
+            @Model.Address
+        </p>
+
+        @* ── Info grid — 4 key fields ─────────────────────── *@
+        <div class="property-card__info-grid mb-3">
+
+            <div class="property-card__info-item">
+                <span class="property-card__info-label">Rent</span>
+                <span class="property-card__info-value">@Model.MonthlyRent.ToString("C0")<small>/mo</small></span>
+            </div>
+
+            <div class="property-card__info-item">
+                <span class="property-card__info-label">Security Deposit</span>
+                <span class="property-card__info-value">@Model.SecurityDeposit.ToString("C0")</span>
+            </div>
+
+            <div class="property-card__info-item">
+                <span class="property-card__info-label">Available From</span>
+                <span class="property-card__info-value">@Model.AvailableFrom.ToString("MMM d, yyyy")</span>
+            </div>
+
+            <div class="property-card__info-item">
+                <span class="property-card__info-label">Lease Term</span>
+                <span class="property-card__info-value">@Model.LeaseTerm months</span>
+            </div>
+
+        </div>
+
+        @* ── CTA ──────────────────────────────────────────── *@
+        <a asp-controller="Property"
+           asp-action="Details"
+           asp-route-slug="@Model.Slug"
+           class="btn btn-brand property-card__cta w-100 mt-auto">
+            View Details
+        </a>
+
+    </div>
+
+</article>

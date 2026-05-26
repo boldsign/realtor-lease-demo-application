@@ -1,0 +1,19 @@
+{
+  "$schema": "https://agentskills.io/schema/v0.2.0/agent-skills.json",
+  "skills": [
+    {
+      "name": "Realtor Lease Demo (BoldSign Integration)",
+      "type": "interactive-demo",
+      "description": "Sample Realtor Lease demo showing BoldSign document signing and demo workflows for leasing scenarios.",
+      "url": "https://cubeflakes-realtorleasedemo.boldsign.com/",
+      "sha256": "pending"
+    },
+    {
+      "name": "BoldSign OpenAPI Specification",
+      "type": "openapi",
+      "description": "OpenAPI specification for BoldSign APIs (referenced by the Realtor Lease demo).",
+      "url": "https://api.boldsign.com/swagger/v1/swagger.json",
+      "sha256": "pending"
+    }
+  ]
+}
